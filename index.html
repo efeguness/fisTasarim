@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiş Önizleme Aracı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fiş Tasarımı Önizleme Aracı</h1>
+            <p>XML formatındaki fiş tasarımlarınızın yazıcıdan çıktıktan sonra nasıl görüneceğini görebilirsiniz.</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="upload-tab">Fiş Önizleme</button>
+            <button class="tab-button" data-tab="design-tab">Kendi Fişini Tasarla</button>
+        </div>
+
+        <div id="upload-tab" class="tab-content active">
+            <div class="upload-section">
+                <div class="file-upload">
+                    <input type="file" id="file-input" accept=".xml" />
+                    <label for="file-input">XML Dosyası Seçin</label>
+                    <p class="upload-info">Tasarımını görmek istediğiniz .xml uzantılı dosyayı seçin</p>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <div class="toolbar">
+                    <button id="print-btn">Yazdır</button>
+                    <select id="scale-select">
+                        <option value="1">%100</option>
+                        <option value="1.25">%125</option>
+                        <option value="1.5">%150</option>
+                        <option value="2">%200</option>
+                    </select>
+                </div>
+                <div class="receipt-preview">
+                    <div id="receipt" class="thermal-receipt"></div>
+                </div>
+            </div>
+
+            <div class="xml-preview">
+                <h3>XML İçeriği</h3>
+                <pre id="xml-content"></pre>
+            </div>
+        </div>
+
+        <div id="design-tab" class="tab-content">
+            <div class="design-container">
+                <div class="design-options">
+                    <h3>Fiş Özelliklerini Seçin</h3>
+                    
+                    <div class="options-section">
+                        <h4>Fiş Başlığı</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="restaurant-name" checked> Restoran Adı</label>
+                            <input type="text" id="company-name" data-feature-value="restaurant-name" placeholder="Restoran adı" value="ISTANBUL RESTORAN">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="branch-name"> Şube Bilgisi</label>
+                            <input type="text" id="company-address" data-feature-value="branch-name" placeholder="Şube adı" value="Kadıköy Şube">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="tax-number"> Vergi Numarası</label>
+                            <input type="text" id="tax-info" data-feature-value="tax-number" placeholder="Vergi no" value="VKN: 1234567890">
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Müşteri Bilgileri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="customer-name"> Müşteri Adı</label>
+                            <input type="text" id="customer-name" data-feature-value="customer-name" placeholder="Müşteri adı">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="customer-address"> Müşteri Adresi</label>
+                            <input type="text" id="customer-address" data-feature-value="customer-address" placeholder="Müşteri adresi">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="customer-phone"> Müşteri Telefonu</label>
+                            <input type="text" id="customer-phone" data-feature-value="customer-phone" placeholder="Müşteri telefonu">
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Masa ve Personel Bilgileri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="table-info" checked> Masa Numarası</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="table-group"> Masa Grubu/Bölümü</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="employee-name" checked> Personel Adı</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="terminal-id"> Terminal/Kasa Numarası</label>
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Sipariş Bilgileri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="order-datetime" checked> Sipariş Tarihi</label>
+                            <input type="date" id="order-date" data-feature-value="order-date">
+                            <input type="time" id="order-time" data-feature-value="order-time">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="order-id" checked> Sipariş/Fiş No</label>
+                            <input type="text" id="order-number" data-feature-value="order-id" placeholder="Sipariş no">
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Ürün Bilgileri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="product-list" checked> Ürün Listesi</label>
+                            <select data-feature-value="product-columns">
+                                <option value="quantity-product-price">Miktar, Ürün, Fiyat</option>
+                                <option value="quantity-product">Sadece Miktar ve Ürün</option>
+                                <option value="product-price">Sadece Ürün ve Fiyat</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Ödeme Bilgileri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="total-price" checked> Toplam Tutar</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="discount"> İndirim</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="paid-amount"> Ödenen Tutar</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="payment-balance"> Kalan Tutar</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="payment-method"> Ödeme Yöntemi</label>
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Fiş Alt Bilgisi</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="thank-you" checked> Teşekkür Mesajı</label>
+                            <input type="text" data-feature-value="thank-you" placeholder="Teşekkür mesajı" value="TEŞEKKÜR EDERİZ">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="not-fiscal"> Mali Değer İbaresi</label>
+                            <input type="text" data-feature-value="not-fiscal" placeholder="Mali değer ibaresi" value="(MALİ DEĞERİ YOKTUR)">
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="sys-info" checked> Sistem Bilgisi</label>
+                            <input type="text" data-feature-value="sys-info" placeholder="Sistem bilgisi" value="EfeGunes fisTasarim ver. 2025">
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <h4>Garsoniye Seçenekleri</h4>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="waiter-tip"> Garsoniye/Bahşiş</label>
+                        </div>
+                        <div class="option-group">
+                            <label><input type="checkbox" data-feature="waiter-tip-percentage"> Garsoniye Yüzde Oranı</label>
+                            <input type="number" data-feature-value="waiter-tip-percentage" min="1" max="25" value="10">
+                        </div>
+                    </div>
+                    
+                    <div class="options-section actions">
+                        <button id="generate-receipt-btn" class="primary-btn">Fiş Tasarımını Oluştur</button>
+                        <button id="download-xml-btn" class="secondary-btn">XML İndir</button>
+                    </div>
+                </div>
+                
+                <div class="preview-container">
+                    <div class="toolbar">
+                        <button id="design-print-btn">Yazdır</button>
+                        <select id="design-scale-select">
+                            <option value="1">%100</option>
+                            <option value="1.25">%125</option>
+                            <option value="1.5">%150</option>
+                            <option value="2">%200</option>
+                        </select>
+                    </div>
+                    <div id="design-preview" class="receipt-preview">
+                        <div class="thermal-receipt"></div>
+                    </div>
+                    <div class="xml-preview">
+                        <h3>XML İçeriği</h3>
+                        <pre id="design-xml-content"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Fiş Tasarımı Önizleme Aracı - 2025 EFE GÜNEŞ</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
